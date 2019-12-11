@@ -89,7 +89,7 @@ public class Juego extends Application{
 	
 	public void inicializarComponentes() {
 		//jugador = new Jugador(-50,400,"goku",1);
-		jugadorAnimado = new JugadorAnimado(50,400,"KIRBY",1, "descanso");
+		jugadorAnimado = new JugadorAnimado(50,400,"KIRBY",1, "correr");
 		root = new Group();
 		escena = new Scene(root,1000,500);
 		canvas  = new Canvas(1000,500);
@@ -116,8 +116,10 @@ public class Juego extends Application{
 		
 	
 		///Pintar tiles
-		for (int i=0;i<tiles.size();i++)
-			tiles.get(i).pintar(graficos);
+		for (int i=0;i<tiles.size();i++) {
+			for( int j =0; j>=1000; j++)
+			tiles.get(i).pintar(graficos);}
+			
 		
 		jugadorAnimado.pintar(graficos);	
 		//jugador.pintar(graficos);
@@ -212,7 +214,7 @@ public class Juego extends Application{
 			
 		};
 		animationTimer.start(); //Inicia el ciclo
-		cargarTiles();
+		//cargarTiles();
 	}
 	
 	public void actualizar(double t) {
@@ -221,6 +223,7 @@ public class Juego extends Application{
 		//cargarTiles();
 		jugadorAnimado.verificarColisiones(item);
 		jugadorAnimado.verificarColisiones(item2);
+	   //jugadorAnimado.inicializarAnimaciones();
 	}
 
 }

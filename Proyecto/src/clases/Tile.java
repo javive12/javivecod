@@ -139,7 +139,7 @@ public class Tile {
 				Juego.imagenes.get(this.indiceImagen), 
 				this.xImagen, this.yImagen, 
 				this.anchoImagen, this.altoImagen, 
-				this.x, this.y,
+				this.x--, this.y,
 				this.anchoImagen, this.altoImagen
 					);
 			
