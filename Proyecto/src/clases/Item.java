@@ -12,7 +12,7 @@ public class Item {
 	private String indiceImagen;
 	private boolean capturado;
 	public Item(int x, int y, int ancho, int alto, String indiceImagen) {
-		super();
+		//super();
 		this.x = x;
 		this.y = y;
 		this.ancho = ancho;

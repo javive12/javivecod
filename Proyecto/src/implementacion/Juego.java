@@ -3,6 +3,7 @@ package implementacion;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import clases.ColisionFatal;
 import clases.Item;
 import clases.Jugador;
 import clases.JugadorAnimado;
@@ -25,6 +26,7 @@ public class Juego extends Application{
 	private Canvas canvas;
 	private GraphicsContext graficos;
 	private int puntuacion = 0;
+	private int vida=100;
 	//private Jugador jugador;
 	private JugadorAnimado jugadorAnimado;
 	public static boolean derecha=false;
@@ -34,41 +36,116 @@ public class Juego extends Application{
 	public static HashMap<String, Image> imagenes; //Shift+Ctrl+O
 	private Item item;
 	private Item item2;
+	private Item item3;
+	private ColisionFatal choque;
+	
 	//private ArrayList<Image> imagenes;
 	
 	private ArrayList<Tile> tiles;
 	
 	private int[][] mapa = {
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,3,3},
-			{6,7,4,1,5,6,7,8,1,0,0,0,0,0},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,2,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,2,2,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,1,2,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,3,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,1,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
-			{6,7,4,1,0,0,0,1,1,1,1,1,1,1,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			{8,8,3,9,3,3,2,1,9,1},
+			
+
 	};
 	
 	public static void main(String[] args) {
@@ -84,18 +161,23 @@ public class Juego extends Application{
 		ventana.setTitle("el enculado");
 		gestionarEventos();
 		ventana.show();
+		//boolean jugando=false;
 		cicloJuego();		
+		
+		
 	}
 	
 	public void inicializarComponentes() {
 		//jugador = new Jugador(-50,400,"goku",1);
-		jugadorAnimado = new JugadorAnimado(50,400,"KIRBY",1, "correr");
+		jugadorAnimado = new JugadorAnimado(0,304,"KIRBY",1, "correr");
 		root = new Group();
-		escena = new Scene(root,1000,500);
-		canvas  = new Canvas(1000,500);
+		escena = new Scene(root,1000,338);
+		canvas  = new Canvas(1000,338);
 		imagenes = new HashMap<String,Image>();
-		item = new Item(600,400,0,0,"cora ");
-		item2 = new Item(400,400,0,0,"cora ");
+		item = new Item(600,275,0,0,"cora ");
+		item2 = new Item(400,275,0,0,"cora ");
+		item3=new Item(500,275,0,0, "cora ");
+		choque=new ColisionFatal(300,260,0,0,"donald");
 		cargarImagenes();
 		cargarTiles();
 	}
@@ -106,30 +188,33 @@ public class Juego extends Application{
 		imagenes.put("mapa", new Image("mapa.png"));
 		imagenes.put("KIRBY", new Image("KIRBY.png"));
 		imagenes.put("cora ", new Image("cora .png"));
+		imagenes.put("donald", new Image("donald.png"));
 	}
 	
 	public void pintar() {
 		graficos.setFill(Color.WHITE);
-		graficos.fillRect(0, 0, 700, 450);
+		graficos.fillRect(0, 0, 1000, 338);
 		graficos.setFill(Color.BLACK);
-		graficos.fillText("Puntuacion: " + puntuacion, 10, 10);
-		
 	
 		///Pintar tiles
-		for (int i=0;i<tiles.size();i++) {
-			for( int j =0; j>=1000; j++)
-			tiles.get(i).pintar(graficos);}
+		for (int i=0;i<tiles.size();i++) 
+			tiles.get(i).pintar(graficos);
 			
-		
+
+		//graficos.fillText("Puntuacion: " + puntuacion, 10, 10);
+		//graficos.fillText("Vida: " + vida, 20, 20);
 		jugadorAnimado.pintar(graficos);	
 		//jugador.pintar(graficos);
 		item.pintar(graficos);
 		item2.pintar(graficos);
+		item3.pintar(graficos);
+		choque.pintar(graficos);
 
 	}
 	
 	public void cargarTiles() {
 		tiles = new ArrayList<Tile>();
+		
 		for(int i=0; i<mapa.length; i++) {
 			for(int j=0; j<mapa[i].length; j++) {
 				if (mapa[i][j]!=0)
@@ -201,6 +286,9 @@ public class Juego extends Application{
 	}
 	
 	public void cicloJuego() {
+		
+		//boolean jugando=false;
+		//while(vida!=0) {
 		long tiempoInicial = System.nanoTime();
 		AnimationTimer animationTimer = new AnimationTimer() {
 			//Esta rutina simula un ciclo de 60FPS
@@ -211,10 +299,10 @@ public class Juego extends Application{
 				actualizar(t);
 				//cargarTiles();
 			}
-			
+		
 		};
 		animationTimer.start(); //Inicia el ciclo
-		//cargarTiles();
+		//}//cargarTiles();
 	}
 	
 	public void actualizar(double t) {
@@ -223,7 +311,9 @@ public class Juego extends Application{
 		//cargarTiles();
 		jugadorAnimado.verificarColisiones(item);
 		jugadorAnimado.verificarColisiones(item2);
+		jugadorAnimado.verificarColisiones(item3);
 	   //jugadorAnimado.inicializarAnimaciones();
+	   jugadorAnimado.verificarColisionFatal(choque);
 	}
 
 }

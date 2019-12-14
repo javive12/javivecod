@@ -55,32 +55,38 @@ public class Tile {
 			case 4:
 				this.altoImagen = 34;
 				this.anchoImagen = 34;
-				this.xImagen = 67;
-				this.yImagen = 463;
+				this.xImagen = 311;
+				this.yImagen = 316;
 			break;
 			case 5:
 				this.altoImagen = 34;
 				this.anchoImagen = 34;
-				this.xImagen = 265;
-				this.yImagen = 133;
+				this.xImagen = 179;
+				this.yImagen = 283;
 			break;
 			case 6:
 				this.altoImagen = 34;
 				this.anchoImagen = 34;
-				this.xImagen = 132;
-				this.yImagen = 133;
+				this.xImagen = 113;
+				this.yImagen = 283;
 			break;
 			case 7:
 				this.altoImagen = 34;
 				this.anchoImagen = 34;
-				this.xImagen = 132;
-				this.yImagen = 199;
+				this.xImagen = 145;
+				this.yImagen = 283;
 			break;
 			case 8:
 				this.altoImagen = 34;
-				this.anchoImagen = 28;
-				this.xImagen = 7;
-				this.yImagen = 300;
+				this.anchoImagen = 34;
+				this.xImagen = 330;
+				this.yImagen = 35;
+			break;
+			case 9:
+				this.altoImagen = 34;
+				this.anchoImagen = 34;
+				this.xImagen = 65;
+				this.yImagen = 462;
 			break;
 		}
 	}
@@ -139,7 +145,7 @@ public class Tile {
 				Juego.imagenes.get(this.indiceImagen), 
 				this.xImagen, this.yImagen, 
 				this.anchoImagen, this.altoImagen, 
-				this.x--, this.y,
+				this.x, this.y,
 				this.anchoImagen, this.altoImagen
 					);
 			

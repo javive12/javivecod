@@ -14,6 +14,7 @@ public class JugadorAnimado {
 	private HashMap<String, Animacion> animaciones;
 	private String animacionActual;
 	private int puntuacion = 0;
+	private int vida=1;
 	
 	//Coordenadas para el fragmento de la imagen a pintar
 	private int xImagen;
@@ -52,10 +53,8 @@ public class JugadorAnimado {
 	public String getIndiceImagen() {
 		return indiceImagen;
 	}
-	public  void setIndiceImagen(String indiceImagen) {
-		this.indiceImagen = indiceImagen;
-	}
-	
+
+		
 	//Obtener las coordenas del fragmento de la imagen a pintar
 	public void actualizarAnimacion(double t) {
 		Rectangle coordenadasActuales = this.animaciones.get(animacionActual).calcularFrame(t);
@@ -90,7 +89,8 @@ public class JugadorAnimado {
 				this.anchoImagen, this.altoImagen
 		);
 		//graficos.fillRect(this.x, this.y, this.anchoImagen, this.altoImagen);
-		graficos.fillText("Puntuacion " + puntuacion, 0, 400);
+		graficos.fillText("Puntuacion " + puntuacion, 0, 10);
+		graficos.fillText("Vida "+vida,0 , 0);
 	}
 	
 	public Rectangle obtenerRectangulo() {
@@ -128,6 +128,18 @@ public class JugadorAnimado {
 			};
 			Animacion animacionDescanso = new Animacion("descanso",coordenadasDescanso,0.2);
 			animaciones.put("descanso",animacionDescanso);
+	
+            Rectangle coordenadasSalto[]= {
+            		new Rectangle(11,280,48,29),
+            		new Rectangle(7,174,46,37),
+            		new Rectangle(7,174,46,37),
+            		new Rectangle(67,174,46,37),
+            		new Rectangle(67,174,46,37),
+            		new Rectangle(143,187,41,27),
+            		
+            };
+            Animacion animacionSalto = new Animacion("salto",coordenadasSalto,0.2);
+			animaciones.put("salto",animacionSalto);
 	}
 	
 	public void verificarColisiones(Item item) {
@@ -138,6 +150,17 @@ public class JugadorAnimado {
 				item.setCapturado(true);				
 		}
 	}
+	
+	public void verificarColisionFatal(ColisionFatal choque) {
+		if (this.obtenerRectangulo().intersects(choque.obtenerRectangulo().getBoundsInLocal())) {
+				System.out.println("Estan colisionando");
+				if (!choque.isCapturado())
+					this.vida--;
+				choque.setCapturado(true);				
+		}
+	}
+
+
 }
 
 
