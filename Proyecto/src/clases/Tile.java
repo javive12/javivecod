@@ -4,19 +4,21 @@ import implementacion.Juego;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Tile {
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	//Parametros dentro de la imagen principal
-	private int altoImagen;
-	private int anchoImagen;
-	private int xImagen;
-	private int yImagen;
-	private String indiceImagen;
-	private int velocidad;
+	//Coordenadas para el fragmento de la imagen a pintar
+
+	protected int altoImagen;
+	protected int anchoImagen;
+	protected int xImagen;
+	protected int yImagen;
+	protected String indiceImagen;
+	protected int velocidad;
 	//private int invertir=1;
 	public Tile(int x, int y, int anchoImagen, int altoImagen, int xImagen, int yImagen, String indiceImagen,
 			int velocidad) {
-		super();
+		//super();
 		this.x = x;
 		this.y = y;
 		this.altoImagen = altoImagen;
@@ -90,6 +92,13 @@ public class Tile {
 			break;
 		}
 	}
+	public Tile(int x, int y, String indiceImagen, int velocidad ) {
+		this.x=x;
+		this.y=y;
+		this.indiceImagen=indiceImagen;
+		this.velocidad=velocidad;
+		
+	}
 	
 	public int getX() {
 		return x;
@@ -145,7 +154,7 @@ public class Tile {
 				Juego.imagenes.get(this.indiceImagen), 
 				this.xImagen, this.yImagen, 
 				this.anchoImagen, this.altoImagen, 
-				this.x, this.y,
+				this.x--, this.y,
 				this.anchoImagen, this.altoImagen
 					);
 			

@@ -2,28 +2,20 @@ package clases;
 
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 import implementacion.Juego;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 
-public class JugadorAnimado {
-	private int x;
-	private int y;
-	private String indiceImagen;
-	private int velocidad;
-	private HashMap<String, Animacion> animaciones;
+public class JugadorAnimado extends Tile{
+private HashMap<String, Animacion> animaciones;
 	private String animacionActual;
 	private int puntuacion = 0;
-	private int vida=1;
-	
-	//Coordenadas para el fragmento de la imagen a pintar
-	private int xImagen;
-	private int yImagen;
-	private int anchoImagen;
-	private int altoImagen;
+	private int vida=3;
 	
 	public JugadorAnimado(int x, int y, String indiceImagen, int velocidad, String animacionActual) {
-		super();
+		super(x, y, indiceImagen, velocidad);
 		this.x = x;
 		this.y = y;
 		this.indiceImagen = indiceImagen;
@@ -32,28 +24,7 @@ public class JugadorAnimado {
 		inicializarAnimaciones();
 	}
 	
-	public int getVelocidad() {
-		return velocidad;
-	}
-	public void setVelocidad(int velocidad) {
-		this.velocidad = velocidad;
-	}
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
-	public String getIndiceImagen() {
-		return indiceImagen;
-	}
-
+	
 		
 	//Obtener las coordenas del fragmento de la imagen a pintar
 	public void actualizarAnimacion(double t) {
@@ -65,17 +36,15 @@ public class JugadorAnimado {
 	}
 	
 	public void mover(){
-		if (this.x>=1100)
-			this.x = -100;
-		if (Juego.derecha)
+		/*if (Juego.derecha)
+			this.x+=velocidad;*/
+		
+		/*if (Juego.izquierda)
+		this.x-=velocidad;*/
+		if(Juego.space)
 			this.x+=velocidad;
-		
-		if (Juego.izquierda)
-			this.x-=velocidad;
-		
 		if (Juego.arriba)
 			this.y-=velocidad;
-		
 		if (Juego.abajo)
 			this.y+=velocidad;
 	}
@@ -90,7 +59,7 @@ public class JugadorAnimado {
 		);
 		//graficos.fillRect(this.x, this.y, this.anchoImagen, this.altoImagen);
 		graficos.fillText("Puntuacion " + puntuacion, 0, 10);
-		graficos.fillText("Vida "+vida,0 , 0);
+		graficos.fillText("Vida "+vida,0 , 20);
 	}
 	
 	public Rectangle obtenerRectangulo() {
@@ -108,12 +77,7 @@ public class JugadorAnimado {
 					new Rectangle(335,445, 48,40),
 					new Rectangle(407,445, 48,40),
 					new Rectangle(476,445, 48,40),
-					/*new Rectangle(640,480, 45,41),
-					new Rectangle(699,480, 45,41),
-					new Rectangle(764,480, 45,41),
-					new Rectangle(836,480, 45,41),
-					new Rectangle(907,480, 45,41)
-				*/
+
 			};
 			
 			
@@ -123,8 +87,6 @@ public class JugadorAnimado {
 			Rectangle coordenadasDescanso[] = {
 					new Rectangle(0, 0, 40,35),
 					new Rectangle(47,0, 40,35),
-					/*new Rectangle(154,16, 63,73),
-					new Rectangle(226,16, 63,73)*/
 			};
 			Animacion animacionDescanso = new Animacion("descanso",coordenadasDescanso,0.2);
 			animaciones.put("descanso",animacionDescanso);
@@ -142,12 +104,12 @@ public class JugadorAnimado {
 			animaciones.put("salto",animacionSalto);
 	}
 	
-	public void verificarColisiones(Item item) {
-		if (this.obtenerRectangulo().intersects(item.obtenerRectangulo().getBoundsInLocal())) {
+	public void verificarColisiones(Item items) {
+		if (this.obtenerRectangulo().intersects(items.obtenerRectangulo().getBoundsInLocal())) {
 				System.out.println("Estan colisionando");
-				if (!item.isCapturado())
+				if (!items.isCapturado())
 					this.puntuacion++;
-				item.setCapturado(true);				
+				items.setCapturado(true);				
 		}
 	}
 	
@@ -159,7 +121,13 @@ public class JugadorAnimado {
 				choque.setCapturado(true);				
 		}
 	}
-
+     
+	public void detenerJuego() {
+		
+		while(this.vida==0)
+			JOptionPane.showInputDialog( "HAS PERDIDO");
+				
+	}
 
 }
 
