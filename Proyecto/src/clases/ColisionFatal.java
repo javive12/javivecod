@@ -33,7 +33,13 @@ public class ColisionFatal extends Item{
 	
 	}
 
-
+	public void moverDonalds() {
+		this.velocidad=1;
+		     this.x-=velocidad;
+		     if(this.x==-100)
+		    	 this.x=990;
+		   
+		}
 	
 	
 	

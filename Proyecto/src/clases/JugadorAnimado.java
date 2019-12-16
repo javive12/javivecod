@@ -1,5 +1,9 @@
 package clases;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -11,9 +15,11 @@ import javafx.scene.shape.Rectangle;
 public class JugadorAnimado extends Tile{
 private HashMap<String, Animacion> animaciones;
 	private String animacionActual;
-	private int puntuacion = 0;
-	private int vida=3;
-	
+	protected int puntuacion = 0;
+	public static int vida=1;
+	protected int salir=0;
+	protected String deci="";
+	//private Juego jugando;
 	public JugadorAnimado(int x, int y, String indiceImagen, int velocidad, String animacionActual) {
 		super(x, y, indiceImagen, velocidad);
 		this.x = x;
@@ -22,6 +28,12 @@ private HashMap<String, Animacion> animaciones;
 		this.velocidad = velocidad;
 		this.animacionActual = animacionActual;
 		inicializarAnimaciones();
+	}
+	
+	public JugadorAnimado(int puntuacion, int vida) {
+		super();
+	    //this.vida=vida;
+		this.puntuacion=puntuacion;
 	}
 	
 	
@@ -36,17 +48,21 @@ private HashMap<String, Animacion> animaciones;
 	}
 	
 	public void mover(){
-		/*if (Juego.derecha)
-			this.x+=velocidad;*/
-		
-		/*if (Juego.izquierda)
-		this.x-=velocidad;*/
 		if(Juego.space)
-			this.x+=velocidad;
+			this.x+=(velocidad);
+		else
+         this.x-=1;
 		if (Juego.arriba)
 			this.y-=velocidad;
 		if (Juego.abajo)
 			this.y+=velocidad;
+//         this.x-=velocidad;  
+         if(this.x<=10)
+        	 this.x=25;
+		if(this.y>=375)
+        	   this.y=360;
+           if(this.y<=15)
+        	   this.y=20;
 	}
 	
 	public void pintar(GraphicsContext graficos) {
@@ -106,7 +122,6 @@ private HashMap<String, Animacion> animaciones;
 	
 	public void verificarColisiones(Item items) {
 		if (this.obtenerRectangulo().intersects(items.obtenerRectangulo().getBoundsInLocal())) {
-				System.out.println("Estan colisionando");
 				if (!items.isCapturado())
 					this.puntuacion++;
 				items.setCapturado(true);				
@@ -115,20 +130,48 @@ private HashMap<String, Animacion> animaciones;
 	
 	public void verificarColisionFatal(ColisionFatal choque) {
 		if (this.obtenerRectangulo().intersects(choque.obtenerRectangulo().getBoundsInLocal())) {
-				System.out.println("Estan colisionando");
 				if (!choque.isCapturado())
-					this.vida--;
+					JugadorAnimado.vida--;
 				choque.setCapturado(true);				
 		}
 	}
-     
-	public void detenerJuego() {
-		
-		while(this.vida==0)
-			JOptionPane.showInputDialog( "HAS PERDIDO");
-				
+
+
+
+	protected static int getVida() {
+		return vida;
 	}
 
+	protected static void setVida(int vida) {
+		JugadorAnimado.vida = vida;
 }
+
+	
+	public void guardarPuntuacio() {
+		String puntos="";
+		puntos+=JugadorAnimado.vida;
+		
+		try {
+		BufferedWriter flujo = new BufferedWriter(new FileWriter("puntuacio.csv",true));
+		flujo.write( "");
+		flujo.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
+
+	@Override
+	public String toString() {
+		return "JugadorAnimado [puntuacion=" + puntuacion + "]";
+	}
+
+	public void toScv() {
+		String puntos="";
+		puntos="JugadorAnimado [puntuacion=" + puntuacion + "]"		;
+	}
+}
+
+
+
 
 

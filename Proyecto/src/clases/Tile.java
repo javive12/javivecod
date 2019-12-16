@@ -99,6 +99,7 @@ public class Tile {
 		this.velocidad=velocidad;
 		
 	}
+	public Tile() {}
 	
 	public int getX() {
 		return x;
@@ -154,24 +155,23 @@ public class Tile {
 				Juego.imagenes.get(this.indiceImagen), 
 				this.xImagen, this.yImagen, 
 				this.anchoImagen, this.altoImagen, 
-				this.x--, this.y,
+				this.x, this.y,
 				this.anchoImagen, this.altoImagen
-					);
-			
-			/*
-			 * graficos.drawImage(
-				Juego.imagenes.get(this.indiceImagen), 
-				this.xImagen, this.yImagen, 
-				this.anchoImagen, this.altoImagen, 
-				this.x + (invertir==-1?70:0), this.y,
-				this.anchoImagen*invertir, this.altoImagen
-			);*/
+				);	
+	}
+	
+	public void moverTiles() {
+		     this.velocidad=1;
+		//while(Juego.space)
+		     this.x-=velocidad;
+		     if(this.x==-100)
+		    	 this.x=990;
+		   
+		}
 		
 	}
 	
-	
-	
-}
+
 
 /*
 if (condicion)

@@ -50,7 +50,7 @@ public class Animacion {
 		this.cantidadFrames = coordenadasImagenes.length;
 		this.frameActual = (int)((t % (cantidadFrames * duracion)) / duracion);
 		//System.out.println("Duracion: " + duracion);
-		System.out.println(frameActual);
+		//System.out.println(frameActual);
 		return coordenadasImagenes[frameActual];		
 	}
 	

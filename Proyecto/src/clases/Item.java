@@ -5,11 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 
 public class Item extends Tile {
-	/*private int x;
-	private int y;
-	private int ancho;
-	private int alto;
-	private String indiceImagen;*/
 	private boolean capturado;
 	
 	
@@ -47,7 +42,7 @@ public class Item extends Tile {
 	public void pintar(GraphicsContext graficos) {
 		
 		if (!capturado)
-			graficos.drawImage(Juego.imagenes.get(indiceImagen), this.x--, this.y);
+			graficos.drawImage(Juego.imagenes.get(indiceImagen), this.x, this.y);
 		//graficos.fillRect(this.x, this.y, 18, 18);
 	}
 	
@@ -63,6 +58,13 @@ public class Item extends Tile {
 		this.capturado = capturado;
 	}
 	
-	
+	public void moverItems() {
+		this.velocidad=1;
+		
+		     this.x-=velocidad;
+		     if(this.x==-100)
+		    	 this.x=990;
+		   
+		}
 	
 }
